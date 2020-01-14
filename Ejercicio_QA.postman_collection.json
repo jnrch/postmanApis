@@ -1,0 +1,143 @@
+{
+	"info": {
+		"_postman_id": "a4b1cddd-a7bb-4fd7-b6e9-a0fa24a3b247",
+		"name": "Api - test garbarino",
+		"description": "Ejercicio de test de APIs con Postman - Garbarino",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Libros",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9c31b6bc-3c17-4eaf-bd02-1eea26db46e0",
+						"exec": [
+							"var schema = {",
+							"    \"type\": \"array\",",
+							"    \"items\": [{",
+							"        type: \"object\",",
+							"        properties:{",
+							"         \"ID\": {",
+							"            \"type\":\"integer\"",
+							"             }",
+							"        }",
+							"    }]",
+							"};",
+							"",
+							"pm.test('Los ID de los libros son de tipo numerico', function() {",
+							"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/Books",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"Books"
+					]
+				},
+				"description": "Obtener los libros"
+			},
+			"response": []
+		},
+		{
+			"name": "Authors",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "30ce2ca6-9ab4-48b7-acb9-a261bf29548a",
+						"exec": [
+							"pm.test(\"El códico de status es 200\", function () { pm.response.to.have.status(200); });",
+							"",
+							"pm.test(\"Content-Type presente\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"var schema = {",
+							"    \"type\": \"array\",",
+							"    \"items\": [{",
+							"        type: \"object\",",
+							"        properties:{",
+							"         \"FirstName\": {",
+							"            \"type\":\"string\"",
+							"             },",
+							"         \"LastName\": {",
+							"             \"type\": \"string\"",
+							"         }",
+							"        }",
+							"    }]",
+							"};",
+							"",
+							"",
+							"pm.test('Los nombres y apellidos son de tipo string', function() {",
+							"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/Authors",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"Authors"
+					]
+				},
+				"description": "Validar que el servicio de autores /Authors retorne un status code 200. "
+			},
+			"response": []
+		},
+		{
+			"name": "Authors - Por ID",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6bf5b356-9627-408a-9dae-1f4a667a5883",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/authors/books/{{book_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"authors",
+						"books",
+						"{{book_id}}"
+					]
+				},
+				"description": "- Obtener los autores de cada libro con el servicio /authors/books/{idBooks}\n*Deberás ver la forma de llamar a este servicio por cada libro del listado de./Books4 "
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
